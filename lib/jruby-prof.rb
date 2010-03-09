@@ -12,11 +12,11 @@ module JRubyProf
 
   require 'jruby-prof/profile_invocation'
 
-  def self.start_tracing
+  def self.start
     CachingCallSite.start_tracing
   end
   
-  def self.stop_tracing
+  def self.stop
     CachingCallSite.stop_tracing
   end
   

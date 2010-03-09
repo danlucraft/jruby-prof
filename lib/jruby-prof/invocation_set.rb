@@ -20,7 +20,7 @@ module JRubyProf
     end
     
     def self.add_methods(h, inv)
-      return if inv.name =~ /CachingCallSite\.stop_tracing/ or inv.name =~ /JRubyProf\.stop_tracing/
+      return if inv.name =~ /CachingCallSite\.stop_tracing/ or inv.name =~ /JRubyProf\.stop/
       h[inv.name] ||= Method.new(inv.class_name, inv.method_name, inv.static?)
       h[inv.name].add_invocation(inv)
       inv.children.each do |child_inv|
