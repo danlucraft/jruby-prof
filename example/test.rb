@@ -22,4 +22,4 @@ JRubyProf.start_tracing
 thing.stuff1
 thing.stuff3
 JRubyProf.stop_tracing
-JRubyProf.print_call_tree("tracing_example.html")
+JRubyProf.print_call_tree("tracing_example.txt")
