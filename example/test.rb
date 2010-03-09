@@ -4,14 +4,15 @@ require 'jruby-prof'
 
 class Thing
   def stuff1
-    10000.times { 1 + 2 }
+    10000.times { 1 + 2; "asdf".length }
   end
   
-  def method_overhead
+  def length
+    "asdf".length
   end
   
   def stuff4
-    10000.times { method_overhead }
+    10000.times { length }
   end
 end
 
@@ -23,4 +24,4 @@ thing.stuff1
 thing.stuff4
 JRubyProf.stop
 puts "took #{Time.now - s}s"
-JRubyProf.print_flat_text("tracing_example.txt")
+JRubyProf.print_graph_text("tracing_example.txt")

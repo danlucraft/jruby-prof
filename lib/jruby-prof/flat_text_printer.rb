@@ -2,6 +2,7 @@
 module JRubyProf
   class FlatTextPrinter < AbstractPrinter
     TABLE_HEADER = " %self  cumulative    total     self   children    calls self/call total/call  name"  
+    
     def print_on(output)
       methods = invocation_set.get_methods.values.sort_by {|m| m.duration }.reverse
       output.puts TABLE_HEADER
