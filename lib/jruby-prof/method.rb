@@ -12,16 +12,28 @@ module JRubyProf
       @static
     end
     
+    def toplevel?
+      method_name == nil
+    end
+    
     def add_invocation(inv)
       @invocations << inv
     end
     
     def duration
-      @invocations.inject(0) {|m, inv| m + inv.duration}
+      if toplevel?
+        childrens_duration
+      else
+        @invocations.inject(0) {|m, inv| m + inv.duration}
+      end
     end
     
     def count
-      @invocations.inject(0) {|m, inv| m + inv.count}
+      if toplevel?
+        1
+      else
+        @invocations.inject(0) {|m, inv| m + inv.count}
+      end
     end
     
     def childrens_duration
@@ -29,7 +41,7 @@ module JRubyProf
     end
     
     def name
-      "#{class_name}#{static? ? "." : "#"}#{method_name}"
+      "#{class_name}#{static? ? "." : "#"}#{method_name || "toplevel"}"
     end
   end
 end
