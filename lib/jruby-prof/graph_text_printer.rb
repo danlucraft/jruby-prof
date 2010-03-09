@@ -1,7 +1,7 @@
 
 module JRubyProf
   class GraphTextPrinter < AbstractPrinter
-    TABLE_HEADER = " %total    %self      total      self    children               calls   Name"
+    TABLE_HEADER = " %total    %self      total      self    children    calls   Name"
     
     def print_on(output)
       methods = invocation_set.get_methods.values.sort_by {|m| m.duration }.reverse
@@ -34,7 +34,7 @@ module JRubyProf
       else
         output.print "                "
       end
-      output.puts "#{total.to_s.rjust(11)} #{self_.to_s.rjust(8)} #{children.to_s.rjust(8)} #{calls.to_s.rjust(7)}  #{name}"
+      output.puts "#{total.to_s.rjust(11)} #{self_.to_s.rjust(9)} #{children.to_s.rjust(11)} #{calls.to_s.rjust(8)}  #{name}"
     end
   end
 end
