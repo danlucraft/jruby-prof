@@ -24,4 +24,4 @@ thing.stuff1
 thing.stuff4
 JRubyProf.stop
 puts "took #{Time.now - s}s"
-JRubyProf.print_graph_text("tracing_example.txt")
+JRubyProf.print_graph_html("tracing_example.html")

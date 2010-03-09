@@ -1,0 +1,18 @@
+
+
+<tr class="<%= major_row ? "method" : "" %>">
+  <td><%= ("%2.2f%" % total_pc) if major_row %></td>
+  <td><%= ("%2.2f%" % self_pc) if major_row %></td>
+  <td><%= total/1000.0 %></td>
+  <td><%= self_/1000.0 %></td>
+  <td><%= children/1000.0 %></td>
+  <td><%= calls %></td>
+  <td>
+    <% if major_row %>
+      <a name="<%= safe_name(name) %>"><%= name %></a>
+    <% else %>
+      <a href="#<%= safe_name(name) %>"><%= name %></a>
+    <% end %>
+  </td>
+</tr>
+
