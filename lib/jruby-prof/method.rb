@@ -89,9 +89,9 @@ module JRubyProf
           next unless inv2
           h[inv2.name] ||= CallContext.new(inv2.name)
           cc = h[inv2.name]
-          cc.duration           += inv2.duration
-          cc.childrens_duration += inv2.childrens_duration
-          cc.count              += inv2.count
+          cc.duration           += inv.duration
+          cc.childrens_duration += inv.childrens_duration
+          cc.count              += inv.count
         end
         h.values
       end
