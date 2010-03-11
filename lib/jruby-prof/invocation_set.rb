@@ -19,6 +19,10 @@ module JRubyProf
       h
     end
     
+    def length
+      invocations.length
+    end
+    
     def top_level_duration
       invocations.inject(0.0) do |m, inv| 
         m + inv.childrens_duration

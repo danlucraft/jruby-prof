@@ -30,7 +30,7 @@ module JRubyProf
   end
   
   def self.print_tree_html(filename)
-    printer = TreeHtmlPrinter.new(org.jruby.runtime.callsite.CachingCallSite.currentInvocations.values)
+    printer = TreeHtmlPrinter.new(InvocationSet.new(org.jruby.runtime.callsite.CachingCallSite.currentInvocations.values.to_a))
     printer.print_to_file(filename)
   end
   

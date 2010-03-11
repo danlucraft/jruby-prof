@@ -6,7 +6,7 @@ module JRubyProf
       total_duration = invocation_set.top_level_duration
       output.puts TABLE_HEADER
       rows = methods.map do |method|
-        method.parent_contexts.each do |context|  
+        method.parent.each do |context|  
           print_method(output, context, total_duration, false)
         end
         print_method(output, method, total_duration, true)
@@ -31,6 +31,7 @@ module JRubyProf
       self_pc  = (self_.to_f/total_duration)*100
       calls    = method.count
       name     = method.name
+      inv_id   = nil
       template = File.read(File.join(File.dirname(__FILE__), "..", "..", "templates", "graph_row.html.erb"))
       erb = ERB.new(template)
       output.puts(erb.result(binding))

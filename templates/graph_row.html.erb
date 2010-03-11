@@ -9,9 +9,9 @@
   <td><%= calls %></td>
   <td>
     <% if major_row %>
-      <a name="<%= safe_name(name) %>"><%= name %></a>
+      <a name="<%= safe_name(name) + (inv_id ? "_#{inv_id}" : "") %>"><%= name %></a>
     <% else %>
-      <a href="#<%= safe_name(name) %>"><%= name %></a>
+      <a href="#<%= safe_name(name) + (inv_id ? "_#{inv_id}" : "") %>"><%= name %></a>
     <% end %>
   </td>
 </tr>

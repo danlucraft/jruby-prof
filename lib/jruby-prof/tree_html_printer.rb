@@ -2,122 +2,129 @@
 module JRubyProf
   class TreeHtmlPrinter < AbstractPrinter
     def print_on(output)
+      p [invocation_set.length, :threads]
+      invocation = invocation_set.invocations.first
+      total_duration = invocation.to_method.duration
+      p total_duration
+      all_invocations = []
+      get_invocations(all_invocations, invocation)
       output.puts TABLE_HEADER
-      invocation_set.each do |inv|
-        dump_from_root(output, inv)
+      all_invocations = all_invocations.sort_by {|i| m = i.to_method.duration }.reverse
+      all_invocations.each do |inv|
+        next if inv.name =~ /CachingCallSite\.stop_tracing/
+        next if inv.name =~ /JRubyProf\.stop/
+
+        #next if inv.name == "#"
+        c = inv
+        parents = []
+        while c.parent
+          c = c.parent
+          parents << c
+        end
+        parents.reverse.each do |parent_inv|
+          print_invocation(output, parent_inv, total_duration, false)
+        end
+        print_invocation(output, inv, total_duration, true)
+        inv.children.each do |child_inv|
+          next if child_inv.name =~ /CachingCallSite\.stop_tracing/
+          print_invocation(output, child_inv, total_duration, false)
+        end
+        output.puts <<-HTML
+          <tr class="break">
+            <td colspan="7"></td>
+          </tr>
+        HTML
       end
       output.puts TABLE_FOOTER
     end
-
-    private
     
-    def dump(invocation)
-      result = <<-HTML
-        <li class="closed">
-          <span class="path">
-            #{ invocation.name }
-          </span>
-          <span class="count">
-            #{ invocation.count }
-          </span>
-          <span class="duration">
-            #{ invocation.duration }
-          </span>
-          <span class="childrens_duration">
-            #{ invocation.childrens_duration }
-          </span>
-          <ul>
-            #{ invocation.children.map {|i| dump(i) }.join("\n") }
-          </ul>
-        </li>
-      HTML
+    def get_invocations(arr, invocation)
+      arr << invocation
+      invocation.children.each do |inv|
+        get_invocations(arr, inv)
+      end
     end
     
-    def dump_from_root(f, inv)
-      current = inv
-      current = current.parent while current.parent
-      f.puts(dump(current))
+    def print_invocation(output, invocation, total_duration, major_row)
+      next if invocation.name =~ /JRubyProf\.stop/
+      method = invocation.to_method
+      total    = method.duration
+      total_pc = (total.to_f/total_duration)*100
+      children = method.childrens_duration
+      self_    = total - children
+      self_pc  = (self_.to_f/total_duration)*100
+      calls    = method.count
+      name     = method.name
+      inv_id   = invocation.id
+      template = File.read(File.join(File.dirname(__FILE__), "..", "..", "templates", "graph_row.html.erb"))
+      erb = ERB.new(template)
+      output.puts(erb.result(binding))
+    end
+    
+    def safe_name(name)
+      name.gsub("#", "_inst_").gsub(".", "_stat_")
     end
     
     TABLE_HEADER = <<HTML
     <html>
       <body>
 <head>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
 <style media="all" type="text/css">
+    table {
+	    border-collapse: collapse;
+	    border: 1px solid #CCC;
+	    font-family: Verdana, Arial, Helvetica, sans-serif;
+	    font-size: 9pt;
+	    line-height: normal;
+    }
 
-body {
-  width: 1000px;
-}
+    th {
+	    text-align: center;
+	    border-top: 1px solid #339;
+	    border-bottom: 1px solid #339;
+	    background: #CDF;
+	    padding: 0.3em;
+	    border-left: 1px solid silver;
+    }
 
-.call-tree {
-  font-size: 0.8em;
-}
+		tr.break td {
+		  border: 0;
+	    border-top: 1px solid #339;
+			padding: 0;
+			margin: 0;
+		}
 
-.call-tree li {
-  overflow: auto;
-  list-style-type: none;
-  background-color: rgba(0, 0, 156, 0.075);
-  padding: 5px;
-  padding-bottom: 1px;
-  margin: 5px;
-  margin-bottom: 1px;
-  border: 1px solid black;
-  -webkit-border-radius: 3px;
-  clear: both;
-}
+    tr.method td {
+			font-weight: bold;
+    }
 
-.call-tree ul {
-  width: 350px;  
-}
+    td {
+	    padding: 0.3em;
+    }
 
-.call-tree ul ul {
-  width: 95%;
-}
+    td:first-child {
+	    width: 190px;
+	    }
 
-.call-tree .closed>ul {
-  display: none;
-}
-
-.call-tree ul>li:before {
-  float: left;
-  width: auto;
-  content: "+";
-}
-
-.call-tree .count, .call-tree .path {
-  width: auto;
-}
-
-.call-tree .path {
-  float: left;
-}
-
-.call-tree .count {
-  float: right;
-}
-
-.call-tree .open {
-  display: block;
-}
-
-</style>
+    td {
+	    border-left: 1px solid #CCC;
+	    text-align: center;
+    }	
+  </style>
 </head>
-<body>
-
-<script>
-  $(document).ready(function() {
-    var root = $("li.closed");
-    root.click(function (e) { 
-      e.stopPropagation();
-      $(this).toggleClass("closed"); 
-    });
-  });
-</script>
-<div class="call-tree">
+<table>
+  <tr>
+    <th>%total</th>
+    <th>%self</th>
+    <th>total</th>
+    <th>self</th>
+    <th>children</th>
+    <th>calls</th>
+    <th>Name</th>
+  </tr>
 HTML
     TABLE_FOOTER = <<HTML
-</div>
+</table>
 </body>
 </html>
 HTML
