@@ -13,7 +13,7 @@ module JRubyProf
       all_invocations.each do |inv|
         next if inv.name =~ /CachingCallSite\.stop_tracing/
         next if inv.name =~ /JRubyProf\.stop/
-
+        next if inv.duration < 5
         #next if inv.name == "#"
         c = inv
         parents = []
