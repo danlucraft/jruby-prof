@@ -18,9 +18,9 @@
   </target>
 
   <target name="dist" depends="compile" description="generate the distribution" >
-    <mkdir dir="${dist}/lib"/>
+    <mkdir dir="${dist}"/>
 
-    <jar jarfile="${dist}/lib/jruby-prof.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/jruby-prof.jar" basedir="${build}"/>
   </target>
 
   <target name="clean"

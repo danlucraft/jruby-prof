@@ -2,7 +2,7 @@
 require 'java'
 require 'erb'
 
-require File.dirname(__FILE__) + "/../dist/lib/jruby-prof.jar"
+require File.dirname(__FILE__) + "/../dist/jruby-prof.jar"
 
 import org.jruby.prof.JRubyProf
 
