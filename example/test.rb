@@ -4,16 +4,16 @@ require 'jruby-prof'
 
 require File.dirname(__FILE__) + "/pidigits"
 
-#compute_pidigits(2000)
-#compute_pidigits(2000)
+compute_pidigits(2000)
+compute_pidigits(2000)
 
 s = Time.now
-#compute_pidigits(2000)
+compute_pidigits(2000)
 puts "took #{Time.now - s}s without tracing"
 
 s = Time.now
 JRubyProf.start
-compute_pidigits(1)
+compute_pidigits(2000)
 JRubyProf.stop
 
 puts "took #{Time.now - s}s with tracing"
