@@ -9,10 +9,6 @@ public class JRubyProf {
 
     public static Map<ThreadContext, Invocation> currentInvocations;
 
-    public static void printHello() {
-        System.out.printf("hello: %s\n", Ruby.getGlobalRuntime().toString());
-    }
-    
     public static ProfEventHook hook = null;
     public static long startedTracingTime;
     public static long lastTracingDuration;
@@ -21,17 +17,19 @@ public class JRubyProf {
         hook = new ProfEventHook();
         Ruby.getGlobalRuntime().addEventHook(hook);
         currentInvocations = Collections.synchronizedMap(new HashMap<ThreadContext, Invocation>());
-        System.out.printf("starting tracing...\n");
         shouldProfile = true;
         startedTracingTime = System.currentTimeMillis();
     }
     
     public static void stop() {
-        System.out.printf("stopped tracing.\n");
         shouldProfile = false;
         Ruby.getGlobalRuntime().removeEventHook(hook);
         hook = null;
         lastTracingDuration = System.currentTimeMillis() - startedTracingTime;
+    }
+    
+    public static boolean isRunning() {
+        return shouldProfile;
     }
 
     private static boolean shouldProfile = false;

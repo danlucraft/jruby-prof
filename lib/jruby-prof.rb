@@ -20,6 +20,10 @@ require 'jruby-prof/profile_invocation'
 
 class JRubyProf
   
+  def self.running?
+    self.is_running
+  end
+  
   def self.print_call_tree(filename)
     printer = SimpleTreePrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
