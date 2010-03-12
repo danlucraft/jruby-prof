@@ -2,10 +2,8 @@
 module JRubyProf
   class TreeHtmlPrinter < AbstractPrinter
     def print_on(output)
-      p [invocation_set.length, :threads]
       invocation = invocation_set.invocations.first
       total_duration = invocation.to_method.duration
-      p total_duration
       all_invocations = []
       get_invocations(all_invocations, invocation)
       output.puts TABLE_HEADER

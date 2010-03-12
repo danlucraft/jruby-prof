@@ -6,7 +6,7 @@ module JRubyProf
       total_duration = invocation_set.top_level_duration
       output.puts TABLE_HEADER
       rows = methods.map do |method|
-        method.parent.each do |context|  
+        method.parent_contexts.each do |context|  
           print_method(output, context, total_duration, false)
         end
         print_method(output, method, total_duration, true)
