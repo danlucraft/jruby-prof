@@ -20,32 +20,48 @@ require 'jruby-prof/profile_invocation'
 
 class JRubyProf
   
+  def self.start
+    raise RuntimeError, "JRubyProf already running" if running?
+    start_tracing
+  end
+  
+  def self.stop
+    stop_tracing
+  end
+  
   def self.running?
     self.is_running
   end
   
-  def self.print_call_tree(filename)
-    printer = SimpleTreePrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
+  def self.profile
+    raise ArgumentError, "profile requires a block" unless block_given?
+    start
+    yield
+    stop
+  end
+  
+  def self.print_call_tree(result, filename)
+    printer = SimpleTreePrinter.new(ThreadSet.new(result.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
   
-  def self.print_tree_html(filename)
-    printer = TreeHtmlPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
+  def self.print_tree_html(result, filename)
+    printer = TreeHtmlPrinter.new(ThreadSet.new(result.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
   
-  def self.print_flat_text(filename)
-    printer = FlatTextPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
+  def self.print_flat_text(result, filename)
+    printer = FlatTextPrinter.new(ThreadSet.new(result.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
   
-  def self.print_graph_text(filename)
-    printer = GraphTextPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
+  def self.print_graph_text(result, filename)
+    printer = GraphTextPrinter.new(ThreadSet.new(result.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
 
-  def self.print_graph_html(filename)
-    printer = GraphHtmlPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
+  def self.print_graph_html(result, filename)
+    printer = GraphHtmlPrinter.new(ThreadSet.new(result.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
 end

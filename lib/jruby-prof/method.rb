@@ -96,6 +96,10 @@ class JRubyProf
         h.values
       end
     end
+    
+    def inspect
+      "#<JRubyProf::Method #{class_name} #{method_name}>"
+    end
   end
 end
 

@@ -64,57 +64,58 @@ class BasicTest < Test::Unit::TestCase
     assert(!JRubyProf.running?)
   end
 
-  #def test_double_profile
-  #  RubyProf.start
-  #  assert_raise(RuntimeError) do
-  #    RubyProf.start
-  #  end
-  #
-  #  assert_raise(RuntimeError) do
-  #    RubyProf.profile do
-  #      puts 1
-  #    end
-  #  end
-  #  RubyProf.stop
-  #end
-  #
-  #def test_no_block
-  #  assert_raise(ArgumentError) do
-  #    RubyProf.profile
-  #  end
-  #end
-  #
-  #def test_class_methods
-  #  result = RubyProf.profile do
-  #    C1.hello
-  #  end
-  #
-  #  # Length should be 3:
-  #  #   BasicTest#test_class_methods
-  #  #   <Class::C1>#hello
-  #  #   Kernel#sleep
-  #
-  #  methods = result.threads.values.first.sort.reverse
-  #  assert_equal(3, methods.length)
-  #
-  #  # Check the names
-  #  assert_equal('BasicTest#test_class_methods', methods[0].full_name)
-  #  assert_equal('<Class::C1>#hello', methods[1].full_name)
-  #  assert_equal('Kernel#sleep', methods[2].full_name)
-  #
-  #  # Check times
-  #  assert_in_delta(0.1, methods[0].total_time, 0.01)
-  #  assert_in_delta(0, methods[0].wait_time, 0.01)
-  #  assert_in_delta(0, methods[0].self_time, 0.01)
-  #
-  #  assert_in_delta(0.1, methods[1].total_time, 0.01)
-  #  assert_in_delta(0, methods[1].wait_time, 0.01)
-  #  assert_in_delta(0, methods[1].self_time, 0.01)
-  #
-  #  assert_in_delta(0.1, methods[2].total_time, 0.01)
-  #  assert_in_delta(0, methods[2].wait_time, 0.01)
-  #  assert_in_delta(0.1, methods[2].self_time, 0.01)
-  #end
+  def test_double_profile
+    JRubyProf.start
+    assert_raise(RuntimeError) do
+      JRubyProf.start
+    end
+  
+    assert_raise(RuntimeError) do
+      JRubyProf.profile do
+        puts 1
+      end
+    end
+    JRubyProf.stop
+  end
+  
+  def test_no_block
+    assert_raise(ArgumentError) do
+      JRubyProf.profile
+    end
+  end
+  
+  def test_class_methods
+    result = JRubyProf.profile do
+      C1.hello
+    end
+  
+    # Length should be 3:
+    #   BasicTest#test_class_methods
+    #   <Class::C1>#hello
+    #   Kernel#sleep
+  
+    methods = result.values.to_a.first.get_methods.values.sort_by {|m| m.name}
+    p methods
+    assert_equal(4, methods.length)
+  
+    # Check the names
+    assert_equal('BasicTest#test_class_methods', methods[0].full_name)
+    assert_equal('<Class::C1>#hello', methods[1].full_name)
+    assert_equal('Kernel#sleep', methods[2].full_name)
+  
+    # Check times
+    assert_in_delta(0.1, methods[0].total_time, 0.01)
+    assert_in_delta(0, methods[0].wait_time, 0.01)
+    assert_in_delta(0, methods[0].self_time, 0.01)
+  
+    assert_in_delta(0.1, methods[1].total_time, 0.01)
+    assert_in_delta(0, methods[1].wait_time, 0.01)
+    assert_in_delta(0, methods[1].self_time, 0.01)
+  
+    assert_in_delta(0.1, methods[2].total_time, 0.01)
+    assert_in_delta(0, methods[2].wait_time, 0.01)
+    assert_in_delta(0.1, methods[2].self_time, 0.01)
+  end
   #
   #if RUBY_VERSION < '1.9'
   #  PARENT = Object

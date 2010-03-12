@@ -7,13 +7,13 @@ import org.jruby.runtime.ThreadContext;
 
 public class JRubyProf {
 
-    public static Map<ThreadContext, Invocation> currentInvocations;
+    private static Map<ThreadContext, Invocation> currentInvocations;
 
     public static ProfEventHook hook = null;
     public static long startedTracingTime;
     public static long lastTracingDuration;
     
-    public static void start() {
+    public static void startTracing() {
         hook = new ProfEventHook();
         Ruby.getGlobalRuntime().addEventHook(hook);
         currentInvocations = Collections.synchronizedMap(new HashMap<ThreadContext, Invocation>());
@@ -21,11 +21,18 @@ public class JRubyProf {
         startedTracingTime = System.currentTimeMillis();
     }
     
-    public static void stop() {
+    public static Map<ThreadContext, Invocation> stopTracing() {
         shouldProfile = false;
         Ruby.getGlobalRuntime().removeEventHook(hook);
         hook = null;
         lastTracingDuration = System.currentTimeMillis() - startedTracingTime;
+        for (ThreadContext context : currentInvocations.keySet()) {
+            Invocation inv = currentInvocations.get(context);
+            while (inv.parent != null)
+                inv = inv.parent;
+            currentInvocations.put(context, inv);
+        }
+        return currentInvocations;
     }
     
     public static boolean isRunning() {
