@@ -4,6 +4,7 @@ package org.jruby.prof;
 import org.jruby.prof.JRubyProf;
 
 import org.jruby.RubyModule;
+import org.jruby.MetaClass;
 import org.jruby.runtime.EventHook;
 import org.jruby.runtime.RubyEvent;
 import org.jruby.runtime.ThreadContext;
@@ -17,9 +18,11 @@ public class ProfEventHook extends EventHook {
             className = "null";
         }
         else {
+            if (module instanceof MetaClass) module = ((RubyModule) ((MetaClass) module).getAttached());
             className = module.getName();
         }
         //System.out.printf("eventHandler(_, %s, %s, %d, %s, %s)\n", eventName, file, line, methodName, className);
+        if (className.equals("Java::OrgJrubyProf::JRubyProf")) return;
         if (eventName.equals("call") || eventName.equals("c-call")) {
             JRubyProf.before(context, className, methodName);
         }
