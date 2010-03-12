@@ -1,10 +1,10 @@
 
 class JRubyProf
   class AbstractPrinter
-    attr_reader :invocation_set
+    attr_reader :thread_set
   
-    def initialize(invocation_set, options={})
-      @invocation_set = invocation_set
+    def initialize(thread_set, options={})
+      @thread_set = thread_set
       @options = options
     end
     

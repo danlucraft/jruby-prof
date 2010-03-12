@@ -16,12 +16,19 @@ class Thing
     a * b
   end
 end
+
 JRubyProf.start
-  
-thing = Thing.new
-thing.foo(1, 2)
-Thing.bar(1, 2)
+
+Thread.new do 
+  thing = Thing.new
+  100.times {
+    thing.foo(1, 2)
+  }
+end
+100.times { Thing.bar(1, 2) }
+
 JRubyProf.stop
+
 JRubyProf.print_flat_text("flat.txt")
 JRubyProf.print_graph_text("graph.txt")
 JRubyProf.print_graph_html("graph.html")

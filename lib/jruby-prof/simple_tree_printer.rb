@@ -2,8 +2,11 @@
 class JRubyProf
   class SimpleTreePrinter < AbstractPrinter
     def print_on(output)
-      invocation_set.each do |inv|
-        dump_from_root(output, inv)
+      thread_set.invocations.each_with_index do |invocation, i|
+        output.puts 
+        output.puts "*** Thread #{i + 1} / #{thread_set.length}"
+        output.puts 
+        dump_from_root(output, invocation)
       end
     end
     

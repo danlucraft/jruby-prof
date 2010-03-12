@@ -32,5 +32,12 @@ class JRubyProf
       @id += 1
       @id
     end
+    
+    def get_methods
+      h = {}
+      ThreadSet.add_methods(h, self)
+      h
+    end
   end
 end
+

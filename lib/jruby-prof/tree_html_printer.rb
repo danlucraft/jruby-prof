@@ -2,38 +2,42 @@
 class JRubyProf
   class TreeHtmlPrinter < AbstractPrinter
     def print_on(output)
-      invocation = invocation_set.invocations.first
-      total_duration = invocation.to_method.duration
-      all_invocations = []
-      get_invocations(all_invocations, invocation)
-      output.puts TABLE_HEADER
-      all_invocations = all_invocations.sort_by {|i| m = i.to_method.duration }.reverse
-      all_invocations.each do |inv|
-        next if inv.name =~ /CachingCallSite\.stop_tracing/
-        next if inv.name =~ /JRubyProf\.stop/
-        next if inv.duration < 5
-        #next if inv.name == "#"
-        c = inv
-        parents = []
-        while c.parent
-          c = c.parent
-          parents << c
+      total_duration = thread_set.duration
+      output.puts HEADER
+      thread_set.invocations.each_with_index do |invocation, i|
+        all_invocations = []
+        get_invocations(all_invocations, invocation)
+        output.puts "<h3>Thread #{i + 1}/#{thread_set.length}</h3>"
+        output.puts TABLE_HEADER
+        all_invocations = all_invocations.sort_by {|i| m = i.to_method.duration }.reverse
+        all_invocations.each do |inv|
+          next if inv.name =~ /CachingCallSite\.stop_tracing/
+          next if inv.name =~ /JRubyProf\.stop/
+          next if inv.duration < 5
+          #next if inv.name == "#"
+          c = inv
+          parents = []
+          while c.parent
+            c = c.parent
+            parents << c
+          end
+          parents.reverse.each do |parent_inv|
+            print_invocation(output, parent_inv, total_duration, false)
+          end
+          print_invocation(output, inv, total_duration, true)
+          inv.children.each do |child_inv|
+            next if child_inv.name =~ /CachingCallSite\.stop_tracing/
+            print_invocation(output, child_inv, total_duration, false)
+          end
+          output.puts <<-HTML
+            <tr class="break">
+              <td colspan="7"></td>
+            </tr>
+          HTML
         end
-        parents.reverse.each do |parent_inv|
-          print_invocation(output, parent_inv, total_duration, false)
-        end
-        print_invocation(output, inv, total_duration, true)
-        inv.children.each do |child_inv|
-          next if child_inv.name =~ /CachingCallSite\.stop_tracing/
-          print_invocation(output, child_inv, total_duration, false)
-        end
-        output.puts <<-HTML
-          <tr class="break">
-            <td colspan="7"></td>
-          </tr>
-        HTML
+        output.puts TABLE_FOOTER
       end
-      output.puts TABLE_FOOTER
+      output.puts FOOTER
     end
     
     def get_invocations(arr, invocation)
@@ -63,7 +67,7 @@ class JRubyProf
       name.gsub("#", "_inst_").gsub(".", "_stat_")
     end
     
-    TABLE_HEADER = <<HTML
+    HEADER = <<HTML
     <html>
       <body>
 <head>
@@ -110,6 +114,9 @@ class JRubyProf
     }	
   </style>
 </head>
+HTML
+
+    TABLE_HEADER = <<-HTML
 <table>
   <tr>
     <th>%total</th>
@@ -121,8 +128,14 @@ class JRubyProf
     <th>Name</th>
   </tr>
 HTML
+
     TABLE_FOOTER = <<HTML
 </table>
+<br />
+<br />
+HTML
+
+    FOOTER = <<-HTML
 </body>
 </html>
 HTML

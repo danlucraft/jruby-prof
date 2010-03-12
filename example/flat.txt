@@ -1,25 +1,28 @@
+
+Thread 1 / 1
+
  %self  cumulative    total     self   children    calls self/call total/call  name
- 41.84         741      741      741         0     50317      0.01       0.01  Bignum#*
- 17.67        1054      313      313         0     17228      0.02       0.02  Bignum#/
-  8.30        1201      147      147         0     59938      0.00       0.00  Fixnum#*
-  7.85        1340      139      139         0     25840      0.01       0.01  Bignum#+
-  7.06        1465      761      125       636      8635      0.01       0.09  Transformation#compose
-  4.52        1545      816       80       736     17270      0.00       0.05  Transformation#extract
-  3.27        1603     5278       58      5220      8635      0.01       0.61  PiDigitSpigot#next!
-  1.98        1638       35       35         0     54710      0.00       0.00  Fixnum#+
-  1.58        1666       43       28        15      6635      0.00       0.01  Transformation#next!
-  1.13        1686     1756       20      1736       200      0.10       8.78  Integer#times
-  0.96        1703      410       17       393      8635      0.00       0.05  PiDigitSpigot#safe?
-  0.90        1719      207       16       191      2000      0.01       0.10  PiDigitSpigot#produce
-  0.85        1734     1771       15      1756         1     15.00    1771.00  Object#compute_pidigits
-  0.62        1745       12       11         1      2000      0.01       0.01  Transformation#qrst
-  0.56        1755      594       10       584      6635      0.00       0.09  PiDigitSpigot#consume
-  0.51        1764        9        9         0     10638      0.00       0.00  Transformation#initialize
-  0.34        1770        6        6         0      8635      0.00       0.00  Kernel#class
-  0.06        1771        1        1         0      8635      0.00       0.00  Fixnum#==
-  0.00        1771        0        0         0         1      0.00       0.00  Kernel#Integer
-  0.00        1771        0        0         0         1      0.00       0.00  PiDigitSpigot#initialize
-  0.00        1771        0        0         0       200      0.00       0.00  Fixnum#>=
-  0.00        1771        0        0         0        42      0.00       0.00  Fixnum#/
-  0.00        1771        0        0         0       200      0.00       0.00  Fixnum#-
-  0.00        1771     1771        0      1771         1      0.00    1771.00  #toplevel
+ 39.92         725      725      725         0     50317      0.01       0.01  Bignum#*
+ 17.57        1044      319      319         0     17228      0.02       0.02  Bignum#/
+  8.43        1197      153      153         0     25840      0.01       0.01  Bignum#+
+  7.21        1328      131      131         0     59938      0.00       0.00  Fixnum#*
+  6.88        1453      753      125       628      8635      0.01       0.09  Transformation#compose
+  6.28        1567      844      114       730     17270      0.01       0.05  Transformation#extract
+  2.86        1619     5591       52      5539      8635      0.01       0.65  PiDigitSpigot#next!
+  1.93        1654       52       35        17      6635      0.01       0.01  Transformation#next!
+  1.71        1685       31       31         0     54710      0.00       0.00  Fixnum#+
+  1.71        1716       36       31         5      2000      0.02       0.02  Transformation#qrst
+  1.65        1746      471       30       441      8635      0.00       0.05  PiDigitSpigot#safe?
+  0.88        1762       16       16         0     10638      0.00       0.00  Transformation#initialize
+  0.77        1776      219       14       205      2000      0.01       0.11  PiDigitSpigot#produce
+  0.66        1788     1805       12      1793       200      0.06       9.02  Integer#times
+  0.55        1798     1816       10      1806         1     10.00    1816.00  Object#compute_pidigits
+  0.44        1806      592        8       584      6635      0.00       0.09  PiDigitSpigot#consume
+  0.28        1811        5        5         0      8635      0.00       0.00  Kernel#class
+  0.22        1815        4        4         0      8635      0.00       0.00  Fixnum#==
+  0.06        1816        1        1         0       200      0.00       0.00  Fixnum#-
+  0.00        1816        0        0         0         1      0.00       0.00  Kernel#Integer
+  0.00        1816        0        0         0         1      0.00       0.00  PiDigitSpigot#initialize
+  0.00        1816        0        0         0       200      0.00       0.00  Fixnum#>=
+  0.00        1816        0        0         0        42      0.00       0.00  Fixnum#/
+  0.00        1816     1816        0      1816         1      0.00    1816.00  #toplevel

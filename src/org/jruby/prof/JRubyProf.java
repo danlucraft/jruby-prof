@@ -14,6 +14,8 @@ public class JRubyProf {
     }
     
     public static ProfEventHook hook = null;
+    public static long startedTracingTime;
+    public static long lastTracingDuration;
     
     public static void start() {
         hook = new ProfEventHook();
@@ -21,6 +23,7 @@ public class JRubyProf {
         currentInvocations = Collections.synchronizedMap(new HashMap<ThreadContext, Invocation>());
         System.out.printf("starting tracing...\n");
         shouldProfile = true;
+        startedTracingTime = System.currentTimeMillis();
     }
     
     public static void stop() {
@@ -28,12 +31,13 @@ public class JRubyProf {
         shouldProfile = false;
         Ruby.getGlobalRuntime().removeEventHook(hook);
         hook = null;
+        lastTracingDuration = System.currentTimeMillis() - startedTracingTime;
     }
 
     private static boolean shouldProfile = false;
     private boolean initProfileMethod = false;
 
-    public static void before(ThreadContext context, String className, String methodName) {
+    public static synchronized void before(ThreadContext context, String className, String methodName) {
         if (!shouldProfile) return;
         Invocation inv = null;
         if (currentInvocations.containsKey(context)) {
@@ -64,7 +68,7 @@ public class JRubyProf {
         inv.startTimeCurrent = System.currentTimeMillis();
     }
     
-    public static void after(ThreadContext context, String className, String methodName) {
+    public static synchronized void after(ThreadContext context, String className, String methodName) {
         if (!shouldProfile) return;
         Invocation current = currentInvocations.get(context);
         long time;

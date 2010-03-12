@@ -1,22 +1,15 @@
 
 class JRubyProf
-  class InvocationSet
-    attr_reader :invocations
+  class ThreadSet
+    attr_reader :invocations, :duration
   
-    def initialize(invocations)
+    def initialize(invocations, duration)
       @invocations = invocations.map do |inv|
         c = inv
         c = c.parent while c.parent
         c
       end
-    end
-    
-    def get_methods
-      h = {}
-      invocations.each do |inv|
-        InvocationSet.add_methods(h, inv)
-      end
-      h
+      @duration = duration
     end
     
     def length

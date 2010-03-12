@@ -21,27 +21,27 @@ require 'jruby-prof/profile_invocation'
 class JRubyProf
   
   def self.print_call_tree(filename)
-    printer = SimpleTreePrinter.new(JRubyProf.currentInvocations.values)
+    printer = SimpleTreePrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
   
   def self.print_tree_html(filename)
-    printer = TreeHtmlPrinter.new(InvocationSet.new(JRubyProf.currentInvocations.values.to_a))
+    printer = TreeHtmlPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
   
   def self.print_flat_text(filename)
-    printer = FlatTextPrinter.new(InvocationSet.new(JRubyProf.currentInvocations.values.to_a))
+    printer = FlatTextPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
   
   def self.print_graph_text(filename)
-    printer = GraphTextPrinter.new(InvocationSet.new(JRubyProf.currentInvocations.values.to_a))
+    printer = GraphTextPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
 
   def self.print_graph_html(filename)
-    printer = GraphHtmlPrinter.new(InvocationSet.new(JRubyProf.currentInvocations.values.to_a))
+    printer = GraphHtmlPrinter.new(ThreadSet.new(JRubyProf.currentInvocations.values.to_a, JRubyProf.lastTracingDuration))
     printer.print_to_file(filename)
   end
 end

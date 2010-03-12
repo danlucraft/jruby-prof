@@ -2,24 +2,29 @@
 class JRubyProf
   class GraphHtmlPrinter < GraphTextPrinter
     def print_on(output)
-      methods = invocation_set.get_methods.values.sort_by {|m| m.duration }.reverse
-      total_duration = invocation_set.top_level_duration
-      output.puts TABLE_HEADER
-      rows = methods.map do |method|
-        method.parent_contexts.each do |context|  
-          print_method(output, context, total_duration, false)
+      output.puts HEADER
+      total_duration = thread_set.duration
+      thread_set.invocations.each_with_index do |thread, i|
+        methods = thread.get_methods.values.sort_by {|m| m.duration }.reverse
+        output.puts "<h3>Thread #{i + 1}/#{thread_set.length}</h3>"
+        output.puts TABLE_HEADER
+        rows = methods.map do |method|
+          method.parent_contexts.each do |context|  
+            print_method(output, context, total_duration, false)
+          end
+          print_method(output, method, total_duration, true)
+          method.child_contexts.each do |context|  
+            print_method(output, context, total_duration, false)
+          end
+          output.puts <<-HTML
+            <tr class="break">
+              <td colspan="7"></td>
+            </tr>
+          HTML
         end
-        print_method(output, method, total_duration, true)
-        method.child_contexts.each do |context|  
-          print_method(output, context, total_duration, false)
-        end
-        output.puts <<-HTML
-          <tr class="break">
-            <td colspan="7"></td>
-          </tr>
-        HTML
+        output.puts TABLE_FOOTER
       end
-      output.puts TABLE_FOOTER
+      output.puts FOOTER
     end
 
     def print_method(output, method, total_duration, major_row)
@@ -41,7 +46,7 @@ class JRubyProf
       name.gsub("#", "_inst_").gsub(".", "_stat_")
     end
     
-    TABLE_HEADER = <<HTML
+    HEADER = <<HTML
     <html>
       <body>
 <head>
@@ -88,6 +93,9 @@ class JRubyProf
     }	
   </style>
 </head>
+HTML
+
+  TABLE_HEADER = <<-HTML
 <table>
   <tr>
     <th>%total</th>
@@ -99,8 +107,14 @@ class JRubyProf
     <th>Name</th>
   </tr>
 HTML
+
     TABLE_FOOTER = <<HTML
 </table>
+<br />
+<br />
+HTML
+
+    FOOTER = <<-HTML
 </body>
 </html>
 HTML

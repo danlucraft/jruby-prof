@@ -4,19 +4,24 @@ class JRubyProf
     TABLE_HEADER = " %total    %self      total      self    children    calls   Name"
     
     def print_on(output)
-      methods = invocation_set.get_methods.values.sort_by {|m| m.duration }.reverse
-      output.puts TABLE_HEADER
-      output.puts "-"*100
-      total_duration = invocation_set.top_level_duration
-      rows = methods.map do |method|
-        method.parent_contexts.each do |context|  
-          print_method(output, context, total_duration, false)
-        end
-        print_method(output, method, total_duration, true)
-        method.child_contexts.each do |context|  
-          print_method(output, context, total_duration, false)
-        end
+      thread_set.invocations.each_with_index do |invocation, i|
+        output.puts
+        output.puts "Thread #{i + 1} / #{thread_set.length}"
+        output.puts
+        methods = invocation.get_methods.values.sort_by {|m| m.duration }.reverse
+        output.puts TABLE_HEADER
         output.puts "-"*100
+        total_duration = thread_set.duration
+        rows = methods.map do |method|
+          method.parent_contexts.each do |context|  
+            print_method(output, context, total_duration, false)
+          end
+          print_method(output, method, total_duration, true)
+          method.child_contexts.each do |context|  
+            print_method(output, context, total_duration, false)
+          end
+          output.puts "-"*100
+        end
       end
     end
     
