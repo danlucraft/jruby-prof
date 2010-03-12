@@ -5,3 +5,31 @@ jruby-prof
 Daniel Lucraft
 http://danlucraft.com/blog
 
+This is a clone of ruby-prof for JRuby. It supports all the usual output
+modes, plus a call tree output mode.
+
+INSTALL
+-------
+
+    $ jruby -S gem install jruby-prof
+    
+USAGE
+-----
+
+    require 'rubygems'
+    require 'jruby-prof'
+    
+    result = JRubyProf.profile do
+      # my stuff
+    end
+    
+    JRubyProf.print_flat_text(result, "flat.txt")
+    JRubyProf.print_graph_text(result, "graph.txt")
+    JRubyProf.print_graph_html(result, "graph.html")
+    JRubyProf.print_call_tree(result, "call_tree.txt")
+    JRubyProf.print_tree_html(result, "call_tree.html")
+
+LICENSE
+-------
+
+MIT
