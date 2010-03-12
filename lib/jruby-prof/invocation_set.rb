@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class InvocationSet
     attr_reader :invocations
   

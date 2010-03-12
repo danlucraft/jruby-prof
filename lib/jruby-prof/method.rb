@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class Method
     attr_reader :class_name, :method_name, :invocations
   

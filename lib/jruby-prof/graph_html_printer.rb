@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class GraphHtmlPrinter < GraphTextPrinter
     def print_on(output)
       methods = invocation_set.get_methods.values.sort_by {|m| m.duration }.reverse

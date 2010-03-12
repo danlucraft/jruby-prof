@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class FlatTextPrinter < AbstractPrinter
     TABLE_HEADER = " %self  cumulative    total     self   children    calls self/call total/call  name"  
     

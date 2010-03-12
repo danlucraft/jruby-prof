@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class AbstractPrinter
     attr_reader :invocation_set
   

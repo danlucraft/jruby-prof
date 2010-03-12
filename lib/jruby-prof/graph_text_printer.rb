@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class GraphTextPrinter < AbstractPrinter
     TABLE_HEADER = " %total    %self      total      self    children    calls   Name"
     

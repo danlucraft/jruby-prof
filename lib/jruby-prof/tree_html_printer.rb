@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class TreeHtmlPrinter < AbstractPrinter
     def print_on(output)
       invocation = invocation_set.invocations.first

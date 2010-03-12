@@ -1,5 +1,5 @@
 
-module JRubyProf
+class JRubyProf
   class SimpleTreePrinter < AbstractPrinter
     def print_on(output)
       invocation_set.each do |inv|
