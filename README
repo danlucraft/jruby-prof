@@ -3,7 +3,7 @@ jruby-prof
 ==========
 
 Daniel Lucraft
-http://danlucraft.com/blog
+http://danlucraft.com/blog/2010/03/jruby-prof/
 
 This is a clone of ruby-prof for JRuby. It supports all the usual output
 modes, plus a call tree output mode. 
