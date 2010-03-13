@@ -10,6 +10,8 @@ modes, plus a call tree output mode.
 
 The only measure mode it currently supports is wall time.
 
+*** NB. This is really new code. It probably has lots of bugs and things. - March 2010 ***
+
 INSTALL
 -------
 
