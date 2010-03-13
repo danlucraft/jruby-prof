@@ -14,7 +14,7 @@ class JRubyProf
     
     def dump(f, inv, indent=0)
       f.print(" "*indent)
-      f.puts "#{inv.name}:#{inv.duration}"
+      f.puts "#{inv.name} - #{inv.duration}"
       inv.children.each {|child_inv| dump(f, child_inv, indent + 2)}
     end
     

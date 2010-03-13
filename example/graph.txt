@@ -3,112 +3,112 @@ Thread 1 / 1
 
  %total    %self      total      self    children    calls   Name
 ----------------------------------------------------------------------------------------------------
-                       1854        23        1831     2000  Integer#times
-                       3984        45        3939     6635  PiDigitSpigot#next!
- 310.37%   3.62%       5838        68        5770     8635  PiDigitSpigot#next!
-                        373        53         320     8635  Transformation#extract
-                        487        39         448     8635  PiDigitSpigot#safe?
-                         53        40          13     6635  Transformation#next!
-                        608         7         601     6635  PiDigitSpigot#consume
-                       3984        45        3939     6635  PiDigitSpigot#next!
-                        265        17         248     2000  PiDigitSpigot#produce
+                       1823        19        1804     2000  Integer#times
+                       3661        38        3623     6635  PiDigitSpigot#next!
+ 297.56%   3.09%       5484        57        5427     8635  PiDigitSpigot#next!
+                        399        55         344     8635  Transformation#extract
+                        487        45         442     8635  PiDigitSpigot#safe?
+                         44        31          13     6635  Transformation#next!
+                        633        12         621     6635  PiDigitSpigot#consume
+                       3661        38        3623     6635  PiDigitSpigot#next!
+                        203         7         196     2000  PiDigitSpigot#produce
 ----------------------------------------------------------------------------------------------------
-                       1865         0        1865        1  #toplevel
- 100.00%   0.85%       1881        16        1865        1  Object#compute_pidigits
+                       1832         0        1832        1  #toplevel
+ 100.00%   0.60%       1843        11        1832        1  Object#compute_pidigits
                           0         0           0        1  Kernel#Integer
                           0         0           0        1  PiDigitSpigot#initialize
                           0         0           0      200  Fixnum#>=
-                       1864        10        1854      200  Integer#times
+                       1830         7        1823      200  Integer#times
                           0         0           0      200  Fixnum#+
-                          1         1           0      200  Fixnum#-
+                          2         2           0      200  Fixnum#-
 ----------------------------------------------------------------------------------------------------
- 100.00%   0.00%       1881         0        1881        1  #toplevel
-                       1881        16        1865        1  Object#compute_pidigits
+ 100.00%   0.00%       1843         0        1843        1  #toplevel
+                       1843        11        1832        1  Object#compute_pidigits
 ----------------------------------------------------------------------------------------------------
-                       1864        10        1854      200  Object#compute_pidigits
-  99.10%   0.53%       1864        10        1854      200  Integer#times
-                       1854        23        1831     2000  PiDigitSpigot#next!
+                       1830         7        1823      200  Object#compute_pidigits
+  99.29%   0.38%       1830         7        1823      200  Integer#times
+                       1823        19        1804     2000  PiDigitSpigot#next!
 ----------------------------------------------------------------------------------------------------
-                        601        90         511     6635  PiDigitSpigot#consume
-                        235        53         182     2000  PiDigitSpigot#produce
-  44.44%   7.60%        836       143         693     8635  Transformation#compose
-                          8         8           0     8635  Kernel#class
-                        167       167           0    27354  Fixnum#*
-                          5         5           0    17291  Fixnum#+
-                          9         9           0     8635  Transformation#initialize
-                        457       457           0    33091  Bignum#*
-                         47        47           0     8614  Bignum#+
-----------------------------------------------------------------------------------------------------
-                        373        53         320     8635  PiDigitSpigot#next!
-                        416        62         354     8635  PiDigitSpigot#safe?
-  41.95%   6.11%        789       115         674    17270  Transformation#extract
-                         24        24           0    17314  Fixnum#*
-                          5         5           0    17314  Fixnum#+
+                        399        55         344     8635  PiDigitSpigot#next!
+                        440        60         380     8635  PiDigitSpigot#safe?
+  45.52%   6.24%        839       115         724    17270  Transformation#extract
+                         13        13           0    17314  Fixnum#*
+                          9         9           0    17314  Fixnum#+
                           0         0           0       42  Fixnum#/
-                        290       290           0    17226  Bignum#*
-                         86        86           0    17226  Bignum#+
-                        269       269           0    17228  Bignum#/
+                        302       302           0    17226  Bignum#*
+                         94        94           0    17226  Bignum#+
+                        306       306           0    17228  Bignum#/
 ----------------------------------------------------------------------------------------------------
-                        290       290           0    17226  Transformation#extract
-                        457       457           0    33091  Transformation#compose
-  39.71%  39.71%        747       747           0    50317  Bignum#*
+                        621        89         532     6635  PiDigitSpigot#consume
+                        178        21         157     2000  PiDigitSpigot#produce
+  43.35%   5.97%        799       110         689     8635  Transformation#compose
+                          3         3           0     8635  Kernel#class
+                        150       150           0    27354  Fixnum#*
+                         11        11           0    17291  Fixnum#+
+                         13        13           0     8635  Transformation#initialize
+                        462       462           0    33091  Bignum#*
+                         50        50           0     8614  Bignum#+
 ----------------------------------------------------------------------------------------------------
-                        608         7         601     6635  PiDigitSpigot#next!
-  32.32%   0.37%        608         7         601     6635  PiDigitSpigot#consume
-                        601        90         511     6635  Transformation#compose
+                        302       302           0    17226  Transformation#extract
+                        462       462           0    33091  Transformation#compose
+  41.45%  41.45%        764       764           0    50317  Bignum#*
 ----------------------------------------------------------------------------------------------------
-                        487        39         448     8635  PiDigitSpigot#next!
-  25.89%   2.07%        487        39         448     8635  PiDigitSpigot#safe?
-                        416        62         354     8635  Transformation#extract
-                         32        32           0     8635  Fixnum#==
+                        633        12         621     6635  PiDigitSpigot#next!
+  34.35%   0.65%        633        12         621     6635  PiDigitSpigot#consume
+                        621        89         532     6635  Transformation#compose
 ----------------------------------------------------------------------------------------------------
-                        269       269           0    17228  Transformation#extract
-  14.30%  14.30%        269       269           0    17228  Bignum#/
+                        487        45         442     8635  PiDigitSpigot#next!
+  26.42%   2.44%        487        45         442     8635  PiDigitSpigot#safe?
+                        440        60         380     8635  Transformation#extract
+                          2         2           0     8635  Fixnum#==
 ----------------------------------------------------------------------------------------------------
-                        265        17         248     2000  PiDigitSpigot#next!
-  14.09%   0.90%        265        17         248     2000  PiDigitSpigot#produce
+                        306       306           0    17228  Transformation#extract
+  16.60%  16.60%        306       306           0    17228  Bignum#/
+----------------------------------------------------------------------------------------------------
+                        203         7         196     2000  PiDigitSpigot#next!
+  11.01%   0.38%        203         7         196     2000  PiDigitSpigot#produce
                           0         0           0     2000  Fixnum#*
-                         13         8           5     2000  Transformation#qrst
-                        235        53         182     2000  Transformation#compose
+                         18        16           2     2000  Transformation#qrst
+                        178        21         157     2000  Transformation#compose
 ----------------------------------------------------------------------------------------------------
-                         24        24           0    17314  Transformation#extract
+                         13        13           0    17314  Transformation#extract
                           6         6           0    13270  Transformation#next!
-                        167       167           0    27354  Transformation#compose
+                        150       150           0    27354  Transformation#compose
                           0         0           0     2000  PiDigitSpigot#produce
-  10.47%  10.47%        197       197           0    59938  Fixnum#*
+   9.17%   9.17%        169       169           0    59938  Fixnum#*
 ----------------------------------------------------------------------------------------------------
-                         86        86           0    17226  Transformation#extract
-                         47        47           0     8614  Transformation#compose
-   7.07%   7.07%        133       133           0    25840  Bignum#+
+                         94        94           0    17226  Transformation#extract
+                         50        50           0     8614  Transformation#compose
+   7.81%   7.81%        144       144           0    25840  Bignum#+
 ----------------------------------------------------------------------------------------------------
-                         53        40          13     6635  PiDigitSpigot#next!
-   2.82%   2.13%         53        40          13     6635  Transformation#next!
+                         44        31          13     6635  PiDigitSpigot#next!
+   2.39%   1.68%         44        31          13     6635  Transformation#next!
                           7         7           0    19905  Fixnum#+
                           6         6           0    13270  Fixnum#*
 ----------------------------------------------------------------------------------------------------
-                         32        32           0     8635  PiDigitSpigot#safe?
-   1.70%   1.70%         32        32           0     8635  Fixnum#==
-----------------------------------------------------------------------------------------------------
-                          5         5           0    17314  Transformation#extract
+                          9         9           0    17314  Transformation#extract
                           7         7           0    19905  Transformation#next!
-                          5         5           0    17291  Transformation#compose
+                         11        11           0    17291  Transformation#compose
                           0         0           0      200  Object#compute_pidigits
-   0.90%   0.90%         17        17           0    54710  Fixnum#+
+   1.47%   1.47%         27        27           0    54710  Fixnum#+
+----------------------------------------------------------------------------------------------------
+                         18        16           2     2000  PiDigitSpigot#produce
+   0.98%   0.87%         18        16           2     2000  Transformation#qrst
+                          2         2           0     2000  Transformation#initialize
 ----------------------------------------------------------------------------------------------------
                           0         0           0        3  PiDigitSpigot#initialize
-                          9         9           0     8635  Transformation#compose
-                          5         5           0     2000  Transformation#qrst
-   0.74%   0.74%         14        14           0    10638  Transformation#initialize
+                         13        13           0     8635  Transformation#compose
+                          2         2           0     2000  Transformation#qrst
+   0.81%   0.81%         15        15           0    10638  Transformation#initialize
 ----------------------------------------------------------------------------------------------------
-                         13         8           5     2000  PiDigitSpigot#produce
-   0.69%   0.43%         13         8           5     2000  Transformation#qrst
-                          5         5           0     2000  Transformation#initialize
+                          3         3           0     8635  Transformation#compose
+   0.16%   0.16%          3         3           0     8635  Kernel#class
 ----------------------------------------------------------------------------------------------------
-                          8         8           0     8635  Transformation#compose
-   0.43%   0.43%          8         8           0     8635  Kernel#class
+                          2         2           0      200  Object#compute_pidigits
+   0.11%   0.11%          2         2           0      200  Fixnum#-
 ----------------------------------------------------------------------------------------------------
-                          1         1           0      200  Object#compute_pidigits
-   0.05%   0.05%          1         1           0      200  Fixnum#-
+                          2         2           0     8635  PiDigitSpigot#safe?
+   0.11%   0.11%          2         2           0     8635  Fixnum#==
 ----------------------------------------------------------------------------------------------------
                           0         0           0       42  Transformation#extract
    0.00%   0.00%          0         0           0       42  Fixnum#/
