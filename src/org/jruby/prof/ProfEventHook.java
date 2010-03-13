@@ -3,6 +3,7 @@ package org.jruby.prof;
 
 import org.jruby.prof.JRubyProf;
 
+import org.jruby.RubyObject;
 import org.jruby.RubyModule;
 import org.jruby.MetaClass;
 import org.jruby.runtime.EventHook;
@@ -19,8 +20,17 @@ public class ProfEventHook extends EventHook {
         }
         else {
             if (module instanceof MetaClass) {
-                module = ((RubyModule) ((MetaClass) module).getAttached());
-                className = "<Class::" + module.getName() + ">";
+                IRubyObject obj = ((MetaClass) module).getAttached();
+                if (obj instanceof RubyModule) {
+                    module = (RubyModule) obj;
+                    className = "<Class::" + module.getName() + ">";
+                }
+                else if (obj instanceof RubyObject) {
+                    className = "<Instance::" + ((RubyObject) obj).getType().getName() + ">";
+                }
+                else {
+                    className = "unknown";
+                }
             }
             else {
                 className = module.getName();
