@@ -6,7 +6,9 @@ Daniel Lucraft
 http://danlucraft.com/blog
 
 This is a clone of ruby-prof for JRuby. It supports all the usual output
-modes, plus a call tree output mode.
+modes, plus a call tree output mode. 
+
+The only measure mode it currently supports is wall time.
 
 INSTALL
 -------
@@ -15,6 +17,8 @@ INSTALL
     
 USAGE
 -----
+
+In your program:
 
     require 'rubygems'
     require 'jruby-prof'
@@ -28,6 +32,11 @@ USAGE
     JRubyProf.print_graph_html(result, "graph.html")
     JRubyProf.print_call_tree(result, "call_tree.txt")
     JRubyProf.print_tree_html(result, "call_tree.html")
+
+In order to tell JRuby to send events to JRubyProf for processing, you must
+run your script with the debug flag on:
+
+    $ jruby --debug my_script.rb
 
 LICENSE
 -------
