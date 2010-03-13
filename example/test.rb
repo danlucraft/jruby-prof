@@ -6,6 +6,8 @@ require File.dirname(__FILE__) + "/pidigits"
 
 compute_pidigits(2000)
 compute_pidigits(2000)
+compute_pidigits(2000)
+compute_pidigits(2000)
 
 s = Time.now
 compute_pidigits(2000)

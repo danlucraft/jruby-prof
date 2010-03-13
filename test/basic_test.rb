@@ -96,12 +96,12 @@ class BasicTest < Test::Unit::TestCase
   
     methods = result.values.to_a.first.get_methods.values.sort_by {|m| m.name}
     p methods
-    assert_equal(4, methods.length)
+    assert_equal(3, methods.length)
   
     # Check the names
-    assert_equal('BasicTest#test_class_methods', methods[0].full_name)
-    assert_equal('<Class::C1>#hello', methods[1].full_name)
-    assert_equal('Kernel#sleep', methods[2].full_name)
+    assert_equal('BasicTest#test_class_methods', methods[0].name)
+    assert_equal('<Class::C1>#hello', methods[1].name)
+    assert_equal('Kernel#sleep', methods[2].name)
   
     # Check times
     assert_in_delta(0.1, methods[0].total_time, 0.01)
