@@ -15,12 +15,13 @@ class Thing2
 end
 
 result = JRubyProf.profile do
-  Thread.new do 
-    100.times {
-      Thing.foo(1, 2)
-    }
-  end
-  100.times { Thing2.bar(1, 2) }
+  require 'rubygems'
+#  Thread.new do 
+#    100.times {
+#      Thing.foo(1, 2)
+#    }
+#  end
+#  100.times { Thing2.bar(1, 2) }
 end
 
 JRubyProf.print_flat_text(result, "flat.txt")
