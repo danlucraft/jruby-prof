@@ -10,20 +10,17 @@ spec = Gem::Specification.new do |s|
   s.email             = "dan@fluentradical.com"
   s.homepage          = "http://danlucraft.com/blog"
   s.has_rdoc          = false
-  s.files             = %w(graph.html README tracing_example.html tracing_example.txt) + Dir.glob("{lib/**/*}") + Dir.glob("{templates/**/*}")
+  s.files             = %w(README) + 
+                        Dir.glob("{lib/**/*}") + 
+                        Dir.glob("{templates/**/*}") + 
+                        Dir.glob("{examples/**/*}") + 
+                        Dir.glob("{src}/**/*") + 
+                        Dir.glob("{test}/**/*")
   s.require_paths     = ["lib"]
 end
 
-# This task actually builds the gem. We also regenerate a static
-# .gemspec file, which is useful if something (i.e. GitHub) will
-# be automatically building a gem for this project. If you're not
-# using GitHub, edit as appropriate.
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
-
-  # Generate the gemspec file for github.
-  file = File.dirname(__FILE__) + "/#{spec.name}.gemspec"
-  File.open(file, "w") {|f| f << spec.to_ruby }
 end
 
 # Generate documentation

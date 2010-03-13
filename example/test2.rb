@@ -1,5 +1,4 @@
-require 'java'
-$:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+require 'rubygems'
 require 'jruby-prof'
 
 class Thing
@@ -15,13 +14,12 @@ class Thing2
 end
 
 result = JRubyProf.profile do
-  require 'rubygems'
-#  Thread.new do 
-#    100.times {
-#      Thing.foo(1, 2)
-#    }
-#  end
-#  100.times { Thing2.bar(1, 2) }
+  Thread.new do 
+    100.times {
+      Thing.foo(1, 2)
+    }
+  end
+  100.times { Thing2.bar(1, 2) }
 end
 
 JRubyProf.print_flat_text(result, "flat.txt")
