@@ -57,7 +57,6 @@ public class JRubyProf {
                 inv.parent = parent;
                 inv.className = className;
                 inv.methodName = methodName;
-                inv.frame = context.getCurrentFrame().hashCode();
                 parent.children.add(inv);
             }
             currentInvocations.put(context, inv);
@@ -78,24 +77,6 @@ public class JRubyProf {
         Invocation current = currentInvocations.get(context);
         long time;
         if (current == null) return;
-        if (context.getCurrentFrame() == null) {
-            System.out.printf("Current frame appears to be null... ??\n");
-        }
-        else {
-            boolean stop = false;
-            while (current.frame != context.getCurrentFrame().hashCode() && !stop) {
-                if (current.parent == null) {
-                    //System.out.printf("Oops, reached the top of the invocation tree without matching the JRuby Frame.\n");
-                    stop = true;
-                }
-                else {
-                    time = System.currentTimeMillis() - current.startTimeCurrent;
-                    current.duration += time;
-                    current.startTimeCurrent = 0;
-                    current = current.parent;
-                }
-            }
-        }
         time = System.currentTimeMillis() - current.startTimeCurrent;
         if (current.startTimeCurrent == 0)
             System.out.printf("warning, startTimeCurrent is 0 in after\n");

@@ -9,7 +9,6 @@ public class Invocation {
     public boolean returned = false;
     public long duration = 0;
     public long count = 0;
-    public int frame;
     public long startTimeCurrent;
     public ArrayList<Invocation> children = new ArrayList<Invocation>();
 }

@@ -26,7 +26,7 @@ public class ProfEventHook extends EventHook {
                 className = module.getName();
             }
         }
-        //System.out.printf("eventHandler(_, %s, %s, %d, %s, %s)\n", eventName, file, line, methodName, className);
+        System.out.printf("eventHandler(_, %s, %s, %d, %s, %s)\n", eventName, file, line, methodName, className);
         if (className.equals("<Class::Java::OrgJrubyProf::JRubyProf>")) return;
         if (eventName.equals("call") || eventName.equals("c-call")) {
             JRubyProf.before(context, className, methodName);
