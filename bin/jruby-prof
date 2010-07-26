@@ -1,0 +1,20 @@
+    require 'rubygems'
+    require 'jruby-prof'
+    
+    if ARGV.detect{|arg| arg == '-h' || arg == '--help'}
+      puts 'syntax: script_name arg1 arg2 arg3 (writes several outputs to profile/*)'
+      exit 1
+    end
+    
+    ruby_script = ARGV.shift
+    result = JRubyProf.profile {
+      require ruby_script
+    }
+
+    require 'fileutils'
+    FileUtils.mkdir_p "profile"
+    JRubyProf.print_flat_text(result, "profile/flat.txt")
+    JRubyProf.print_graph_text(result, "profile/graph.txt")
+    JRubyProf.print_graph_html(result, "profile/graph.html")
+    JRubyProf.print_call_tree(result, "profile/call_tree.txt")
+    JRubyProf.print_tree_html(result, "profile/call_tree.html")

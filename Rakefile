@@ -15,8 +15,10 @@ spec = Gem::Specification.new do |s|
                         Dir.glob("{templates/**/*}") + 
                         Dir.glob("{examples/**/*}") + 
                         Dir.glob("{src}/**/*") + 
-                        Dir.glob("{test}/**/*")
+                        Dir.glob("{test}/**/*") +
+                        Dir.glob("{bin}/*")
   s.require_paths     = ["lib"]
+  s.executables = ["jruby-prof"]
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
