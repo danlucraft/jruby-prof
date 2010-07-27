@@ -15,6 +15,7 @@ public class ProfEventHook extends EventHook {
     public void eventHandler(ThreadContext context, String eventName, String file, int line, String methodName, IRubyObject type) {
         RubyModule module = (RubyModule) type;
         String className;
+        boolean isStatic = false;
         if (module == null) {
             className = "null";
         }
@@ -23,7 +24,8 @@ public class ProfEventHook extends EventHook {
                 IRubyObject obj = ((MetaClass) module).getAttached();
                 if (obj instanceof RubyModule) {
                     module = (RubyModule) obj;
-                    className = "<Class::" + module.getName() + ">";
+                    className = module.getName();
+                    isStatic = true;
                 }
                 else if (obj instanceof RubyObject) {
                     className = "<Instance::" + ((RubyObject) obj).getType().getName() + ">";
@@ -37,12 +39,12 @@ public class ProfEventHook extends EventHook {
             }
         }
         //System.out.printf("eventHandler(_, %s, %s, %d, %s, %s)\n", eventName, file, line, methodName, className);
-        if (className.equals("<Class::Java::OrgJrubyProf::JRubyProf>")) return;
+        if (className.equals("Java::OrgJrubyProf::JRubyProf")) return;
         if (eventName.equals("call") || eventName.equals("c-call")) {
-            JRubyProf.before(context, className, methodName);
+            JRubyProf.before(context, className, methodName, isStatic);
         }
         else if (eventName.equals("return") || eventName.equals("c-return")) {
-             JRubyProf.after(context, className, methodName);
+             JRubyProf.after(context, className, methodName, isStatic);
        }
     }
     public boolean isInterestedInEvent(RubyEvent event) { return true; }

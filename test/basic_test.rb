@@ -91,16 +91,15 @@ class BasicTest < Test::Unit::TestCase
   
     # Length should be 3:
     #   #toplevel
-    #   <Class::C1>#hello
+    #   C1.hello
     #   Kernel#sleep
   
     methods = result.values.to_a.first.get_methods.values.sort_by {|m| m.name}
-    p methods
     assert_equal(3, methods.length)
   
     # Check the names
     assert_equal('#toplevel', methods[0].name)
-    assert_equal('<Class::C1>#hello', methods[1].name)
+    assert_equal('C1.hello', methods[1].name)
     assert_equal('Kernel#sleep', methods[2].name)
   
 #    # Check times

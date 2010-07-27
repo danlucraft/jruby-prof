@@ -4,6 +4,7 @@ class JRubyProf
   class Invocation
     alias :method_name  :methodName
     alias :class_name   :className
+    alias :static?      :isStatic
     
     def name
       "#{class_name}#{static? ? "." : "#"}#{method_name}"
@@ -11,10 +12,6 @@ class JRubyProf
       
     def childrens_duration
       children.inject(0) {|m, inv| m + inv.duration}
-    end
-    
-    def static?
-      false
     end
     
     def to_method

@@ -5,6 +5,7 @@ import java.util.*;
 public class Invocation {
     public String className;
     public String methodName;
+    public boolean isStatic = false;
     public Invocation parent;
     public boolean returned = false;
     public long duration = 0;
