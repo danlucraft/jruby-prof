@@ -3,7 +3,7 @@
     original_dir = Dir.pwd
     
     if ARGV.detect{|arg| arg == '-h' || arg == '--help'}
-      puts 'syntax: script_name arg1 arg2 arg3 (writes the several outputs available to profile/*)'
+      puts 'syntax: jruby --debug -S jruby-prof script_name arg1 arg2 arg3 (writes the several outputs available to profile/*)'
       exit 1
     end
     

@@ -40,6 +40,13 @@ run your script with the debug flag on:
 
     $ jruby --debug my_script.rb
 
+
+Or you can use its gem script:
+
+    $ jruby --debug -S jruby-prof scriptname.rb
+    
+Which will profile the entire script, create a local directory named "profile" and output one copy of each graph type there.
+
 LICENSE
 -------
 
