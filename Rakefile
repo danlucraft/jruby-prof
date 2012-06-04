@@ -3,8 +3,8 @@ require "rake/gempackagetask"
 require "rake/rdoctask"
 
 spec = Gem::Specification.new do |s|
-  s.name              = "jruby-prof"
-  s.version           = "0.1.0"
+  s.name              = "rdp-jruby-prof"
+  s.version           = "0.1.0.1"
   s.summary           = "A Ruby level profiler for JRuby"
   s.author            = "Daniel Lucraft"
   s.email             = "dan@fluentradical.com"
@@ -15,8 +15,10 @@ spec = Gem::Specification.new do |s|
                         Dir.glob("{templates/**/*}") + 
                         Dir.glob("{examples/**/*}") + 
                         Dir.glob("{src}/**/*") + 
-                        Dir.glob("{test}/**/*")
+                        Dir.glob("{test}/**/*") +
+                        Dir.glob("{bin}/*")
   s.require_paths     = ["lib"]
+  s.executables = ["jruby-prof"]
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
