@@ -98,7 +98,7 @@ class JRubyProf
     end
     
     def inspect
-      "#<JRubyProf::Method #{class_name} #{method_name}>"
+      "#<JRubyProf::Method #{name}>"
     end
   end
 end

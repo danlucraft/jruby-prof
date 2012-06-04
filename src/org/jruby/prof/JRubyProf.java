@@ -42,13 +42,13 @@ public class JRubyProf {
     private static boolean shouldProfile = false;
     private boolean initProfileMethod = false;
 
-    public static synchronized void before(ThreadContext context, String className, String methodName) {
+    public static synchronized void before(ThreadContext context, String className, String methodName, boolean isStatic) {
         if (!shouldProfile) return;
         Invocation inv = null;
         if (currentInvocations.containsKey(context)) {
             Invocation parent = currentInvocations.get(context);
             for (Invocation subinv : parent.children) {
-                if (subinv.className.equals(className) && subinv.methodName.equals(methodName)) {
+                if (subinv.className.equals(className) && subinv.methodName.equals(methodName) && subinv.isStatic == isStatic) {
                     inv = subinv;
                 }
             }
@@ -57,6 +57,7 @@ public class JRubyProf {
                 inv.parent = parent;
                 inv.className = className;
                 inv.methodName = methodName;
+                inv.isStatic = isStatic;
                 parent.children.add(inv);
             }
             currentInvocations.put(context, inv);
@@ -67,12 +68,12 @@ public class JRubyProf {
             inv = new Invocation();
             currentInvocations.put(context, inv);
             //System.out.printf("current for %s is %s %s\n", context.toString(), inv.className, inv.methodName);
-            before(context, className, methodName);
+            before(context, className, methodName, isStatic);
         }
         inv.startTimeCurrent = System.currentTimeMillis();
     }
     
-    public static synchronized void after(ThreadContext context, String className, String methodName) {
+    public static synchronized void after(ThreadContext context, String className, String methodName, boolean isStatic) {
         if (!shouldProfile) return;
         Invocation current = currentInvocations.get(context);
         long time;
